@@ -19,7 +19,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resource) {
-        resource.resourceId("order").stateless(true);
+//        resource.resourceId("order").stateless(true);
     }
 
     @Override

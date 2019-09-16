@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.web.HttpMediaTypeException;
@@ -42,17 +43,18 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception{
         String finalSecret = "{bcrypt}"+new BCryptPasswordEncoder().encode("123456");
         clients.inMemory().withClient("client_1")
-                .resourceIds("order")
+//                .resourceIds("order")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("select")
 //                .authorities("oauth2")
                 .secret(finalSecret)
                 .and()
                 .withClient("client_2")
-                .resourceIds("order")
+//                .resourceIds("order")
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("select")
 //                .authorities("oauth2")
+                .accessTokenValiditySeconds(60) //过期时间
                 .secret(finalSecret);
     }
 
