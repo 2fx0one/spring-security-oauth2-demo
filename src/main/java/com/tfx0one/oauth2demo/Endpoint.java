@@ -25,7 +25,7 @@ public class Endpoint {
     }
 
     @GetMapping("/order/{id}")
-    @PreAuthorize("@pms.hasPermission('sys_role_add')")
+    @PreAuthorize("@permissionService.hasPermission('sys_role_add')")
     public String getB(@PathVariable String id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return "b: " + id;

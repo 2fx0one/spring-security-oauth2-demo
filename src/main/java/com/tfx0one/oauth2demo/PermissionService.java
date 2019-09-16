@@ -30,7 +30,7 @@ import java.util.Collection;
  * @date 2019/2/1
  * 接口权限判断工具
  */
-@Component("pms")
+@Component("permissionService")
 public class PermissionService {
 	/**
 	 * 判断接口是否有xxx:xxx权限
