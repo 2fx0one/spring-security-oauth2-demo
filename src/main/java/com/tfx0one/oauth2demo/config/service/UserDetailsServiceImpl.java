@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
-    @Cacheable(value = "user_details", key = "#username")
+    @Cacheable(value = "USER_DETAILS", key = "#username")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("sys_add");
         return new User("admin", SecurityConstants.BCRYPT + "$2a$10$kjHLcUnTXhmzys0OyoF0bOJmJtjY4KsGIH8JO3yfMAD/M9plLlXw2", authorities);

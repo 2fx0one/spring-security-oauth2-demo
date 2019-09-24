@@ -10,7 +10,7 @@ public interface SecurityConstants {
      */
     String BCRYPT = "{bcrypt}";
     /**
-     * sys_oauth_client_details 表的字段
+     * sys_oauth_client_details 表的字段 注意这里的client_secret 是加入了 '{noop}' 加密协议的
      */
     String CLIENT_FIELDS = "client_id, CONCAT('{noop}',client_secret) as client_secret, resource_ids, scope, "
             + "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "

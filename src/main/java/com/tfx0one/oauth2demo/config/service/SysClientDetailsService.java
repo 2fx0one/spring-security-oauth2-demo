@@ -17,7 +17,7 @@ public class SysClientDetailsService extends JdbcClientDetailsService {
         super(dataSource);
     }
 
-//    @Cacheable(value = "CLIENT_DETAILS_KEY", key = "#clientId", unless = "#result == null")
+    @Cacheable(value = "CLIENT_DETAILS_KEY", key = "#clientId", unless = "#result == null")
     public ClientDetails loadClientByClientId(String clientId) {
         return super.loadClientByClientId(clientId);
     }
