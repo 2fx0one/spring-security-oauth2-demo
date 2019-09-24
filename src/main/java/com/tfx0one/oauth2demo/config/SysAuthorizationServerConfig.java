@@ -2,6 +2,7 @@ package com.tfx0one.oauth2demo.config;
 
 import com.tfx0one.oauth2demo.config.service.SysClientDetailsService;
 import com.tfx0one.oauth2demo.config.service.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -32,19 +33,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+@AllArgsConstructor
+public class SysAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Resource
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private final RedisConnectionFactory redisConnectionFactory;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailService;
+    private final UserDetailsServiceImpl userDetailService;
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
 //    @Bean
 //    @Primary

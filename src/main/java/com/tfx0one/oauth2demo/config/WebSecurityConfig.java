@@ -6,9 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 2fx0one
+ * 授权管理器
  * 2019-09-16 11:07
  **/
 @Configuration
@@ -24,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
-     * AuthenticationManager 管理器 需要的 用户数据库：{@link UserDetailsServiceImpl} 和 加密器 {@link PasswordEncoder}
+     * 配置 授权管理器 {@link AuthenticationManager}  需要的 用户数据库：{@link UserDetailsServiceImpl} 和 加密器 {@link PasswordEncoder}
      **/
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,7 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
 
 
 //    @Override

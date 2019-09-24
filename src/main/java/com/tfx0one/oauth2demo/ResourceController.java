@@ -1,6 +1,6 @@
 package com.tfx0one.oauth2demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
  * 2019-09-16 10:44
  **/
 @RestController
+@AllArgsConstructor
 public class ResourceController {
-    @Autowired
-    private TokenStore tokenStore;
+
+    private final TokenStore tokenStore;
 
     @GetMapping("/product/{id}")
     public String getA(@PathVariable String id) {
