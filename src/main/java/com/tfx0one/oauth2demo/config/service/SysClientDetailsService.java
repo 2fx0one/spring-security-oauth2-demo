@@ -1,5 +1,6 @@
 package com.tfx0one.oauth2demo.config.service;
 
+import com.tfx0one.oauth2demo.config.SecurityConstants;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
@@ -15,6 +16,8 @@ public class SysClientDetailsService extends JdbcClientDetailsService {
 
     public SysClientDetailsService(DataSource dataSource) {
         super(dataSource);
+        this.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
+        this.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
     }
 
     @Cacheable(value = "CLIENT_DETAILS_KEY", key = "#clientId", unless = "#result == null")

@@ -53,28 +53,10 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 //        // 配置数据源（注意，我使用的是 HikariCP 连接池），以上注解是指定数据源，否则会有冲突
 //        return DataSourceBuilder.create().build();
 //    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
-        SysClientDetailsService clientDetailsService = new SysClientDetailsService(dataSource);
-        clientDetailsService.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
-        clientDetailsService.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
-        clients.withClientDetails(clientDetailsService);
-//        String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
-//        clients.inMemory().withClient("client_1")
-////                .resourceIds("order")
-//                .authorizedGrantTypes("client_credentials", "refresh_token")
-//                .scopes("select")
-////                .authorities("oauth2")
-//                .secret(finalSecret)
-//                .and()
-//                .withClient("client_2")
-////                .resourceIds("order")
-//                .authorizedGrantTypes("password", "refresh_token")
-//                .scopes("select")
-////                .authorities("oauth2")
-//                .accessTokenValiditySeconds(60) //过期时间
-//                .secret(finalSecret);
+        clients.withClientDetails(new SysClientDetailsService(dataSource));
     }
 
     //endpoint config
