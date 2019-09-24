@@ -22,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  **/
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Bean
 //    @Override
@@ -41,6 +40,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println(encode);
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Autowired
     private UserDetailsServiceImpl userDetailService;
 
@@ -55,30 +60,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // 将 check_token 暴露出去，否则资源服务器访问时报 403 错误
-        web.ignoring().antMatchers("/oauth/check_token");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        // 将 check_token 暴露出去，否则资源服务器访问时报 403 错误
+//        web.ignoring().antMatchers("/oauth/check_token");
+//    }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // 将 check_token 暴露出去，否则资源服务器访问时报 403 错误
-        http
-                .authorizeRequests()
-                .antMatchers("/product/*").permitAll() //运行访问列表
-//                .antMatchers("/oauth/token").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                //关闭跨站请求防护
-                .csrf().disable();
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        // 将 check_token 暴露出去，否则资源服务器访问时报 403 错误
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/product/*").permitAll() //运行访问列表
+////                .antMatchers("/oauth/token").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                //关闭跨站请求防护
+//                .csrf().disable();
+//    }
 
 
 

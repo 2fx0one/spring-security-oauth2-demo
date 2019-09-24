@@ -57,6 +57,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         SysClientDetailsService clientDetailsService = new SysClientDetailsService(dataSource);
+        clientDetailsService.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
+        clientDetailsService.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
         clients.withClientDetails(clientDetailsService);
 //        String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 //        clients.inMemory().withClient("client_1")
@@ -93,7 +95,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         return tokenStore;
 
     }
-
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
