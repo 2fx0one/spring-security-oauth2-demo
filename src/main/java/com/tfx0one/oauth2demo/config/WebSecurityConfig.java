@@ -16,30 +16,25 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * 配置一个 UserDetailsService 实际使用的一般是数据库保存。
  * 2fx0one
  * 2019-09-16 11:07
  **/
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Bean
-//    @Override
-//    protected UserDetailsService userDetailsService() {
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//        String finalPassword = "{bcrypt}" + bCryptPasswordEncoder.encode("123456");
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        manager.createUser(User.withUsername("user_1").password(finalPassword).authorities("USER").build());
-//        manager.createUser(User.withUsername("user_2").password(finalPassword).authorities("USER").build());
-//        return manager;
-//    }
 
-    public static void main(String[] args) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encode = bCryptPasswordEncoder.encode("123456");
-        System.out.println(encode);
+    /**
+     * AuthenticationManager 管理器 需要的 用户数据库：{@link UserDetailsServiceImpl} 和 加密器 {@link PasswordEncoder}
+     **/
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 使用自定义认证与授权
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * AuthenticationManager 管理器
+     **/
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -54,11 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 使用自定义认证与授权
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
-    }
 
 
 //    @Override
@@ -80,6 +70,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable();
 //    }
 
+//    @Bean
+//    @Override
+//    protected UserDetailsService userDetailsService() {
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        String finalPassword = "{bcrypt}" + bCryptPasswordEncoder.encode("123456");
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("user_1").password(finalPassword).authorities("USER").build());
+//        manager.createUser(User.withUsername("user_2").password(finalPassword).authorities("USER").build());
+//        return manager;
+//    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("123456");
+        System.out.println(encode);
+    }
 
 
 }
