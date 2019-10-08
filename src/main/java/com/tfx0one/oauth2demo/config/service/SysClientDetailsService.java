@@ -20,6 +20,7 @@ public class SysClientDetailsService extends JdbcClientDetailsService {
         this.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
     }
 
+    @Override
     @Cacheable(value = "CLIENT_DETAILS_KEY", key = "#clientId", unless = "#result == null")
     public ClientDetails loadClientByClientId(String clientId) {
         return super.loadClientByClientId(clientId);
