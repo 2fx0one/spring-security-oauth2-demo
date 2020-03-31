@@ -44,20 +44,11 @@ public class SysAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     private final DataSource dataSource;
 
-//    @Bean
-//    @Primary
-//    @ConfigurationProperties(prefix = "spring.datasource")
-//    public DataSource dataSource() {
-//        // 配置数据源（注意，我使用的是 HikariCP 连接池），以上注解是指定数据源，否则会有冲突
-//        return DataSourceBuilder.create().build();
-//    }
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(new SysClientDetailsService(dataSource));
     }
 
-    //endpoint config
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
