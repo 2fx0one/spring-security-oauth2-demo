@@ -13,16 +13,20 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 配置授权服务器
@@ -59,6 +63,13 @@ public class SysAuthorizationServerConfig extends AuthorizationServerConfigurerA
         ;
     }
 
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.allowFormAuthenticationForClients() //允许表单验证
+                .tokenKeyAccess("permitAll()");
+    }
+
     @Bean
     public TokenStore tokenStore() {
         RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
@@ -67,10 +78,24 @@ public class SysAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.allowFormAuthenticationForClients() //允许表单验证
-                .tokenKeyAccess("permitAll()");
-    }
+//    @Bean
+//    public TokenEnhancer tokenEnhancer() {
+//
+//        return (accessToken, authentication) -> {
+//            //客户端模式
+//            if ("client_credentials".equals(authentication.getOAuth2Request().getGrantType())) {
+//                return accessToken;
+//            }
+//            final Map<String, Object> additionalInfo = new HashMap<>(1);
+//            PigUser pigUser = (PigUser) authentication.getUserAuthentication().getPrincipal();
+//            additionalInfo.put(SecurityConstants.DETAILS_LICENSE, SecurityConstants.PROJECT_LICENSE);
+//            additionalInfo.put(SecurityConstants.DETAILS_USER_ID, pigUser.getId());
+//            additionalInfo.put(SecurityConstants.DETAILS_USERNAME, pigUser.getUsername());
+//            additionalInfo.put(SecurityConstants.DETAILS_DEPT_ID, pigUser.getDeptId());
+//            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+//            return accessToken;
+//        };
+//    }
+
 
 }

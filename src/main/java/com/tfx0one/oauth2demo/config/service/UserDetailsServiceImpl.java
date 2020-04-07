@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Cacheable(value = "USER_DETAILS", key = "#username")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("sys_add");
-        return new User("admin", SecurityConstants.BCRYPT + "$2a$10$kjHLcUnTXhmzys0OyoF0bOJmJtjY4KsGIH8JO3yfMAD/M9plLlXw2", authorities);
+        return new User("admin", SecurityConstants.BCRYPT + "$2a$10$M8rHev.oC.5FhP29n4c/s.04ih9V6w1b1171lp2KXtZK6PrjUlhGG", authorities);
 //        return new User("admin", "123456", new ArrayList<>());
     }
 }
